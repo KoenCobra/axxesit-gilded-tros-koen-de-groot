@@ -1,9 +1,17 @@
-import {Item} from '../src/item';
-import {GildedTros} from '../src/gilded-tros';
+import { GildedTros } from "../src/gilded-tros";
+import { Item } from "../src/item";
 
-describe('GildedTrosTest', () => {
-    const items: Item[] = [new Item('foo', 0, 0)];
-    const app: GildedTros = new GildedTros(items);
-    app.updateQuality();
-    expect(app.items[0].name).toEqual('fixme');
+describe("GildedTros", () => {
+  describe("Good Wine", () => {
+    test("should increase in quality the older it gets", () => {
+      const item: Item = new Item("Good Wine", 1, 10);
+
+      const app: GildedTros = new GildedTros([item]);
+
+      app.updateQuality();
+
+      expect(item.sellIn).toBe(0);
+      expect(item.quality).toBe(11);
+    });
+  });
 });
