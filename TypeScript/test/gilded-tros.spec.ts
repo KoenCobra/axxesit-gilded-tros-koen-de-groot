@@ -35,6 +35,16 @@ describe("GildedTros", () => {
       expect(item.quality).toBe(11);
     });
 
+    test("should increase in quality by 2 after the sell date", () => {
+      const item: Item = new Item(GILDED_TROS_CONSTANTS.GOOD_WINE, 0, 10);
+      const app: GildedTros = new GildedTros([item]);
+
+      app.updateQuality();
+
+      expect(item.sellIn).toBe(-1);
+      expect(item.quality).toBe(12);
+    });
+
     test("should never have quality more than 50", () => {
       const item: Item = new Item(GILDED_TROS_CONSTANTS.GOOD_WINE, 1, 50);
       const app: GildedTros = new GildedTros([item]);
@@ -48,13 +58,13 @@ describe("GildedTros", () => {
 
   describe("B-DAWG Keychain", () => {
     test("should never have to be sold or decreases in Quality", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN, 1, 10);
+      const item: Item = new Item(GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN, 1, 80);
       const app: GildedTros = new GildedTros([item]);
 
       app.updateQuality();
 
       expect(item.sellIn).toBe(1);
-      expect(item.quality).toBe(10);
+      expect(item.quality).toBe(80);
     });
   });
 
@@ -63,6 +73,19 @@ describe("GildedTros", () => {
       GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR,
       GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX,
     ];
+
+    test.each(backstagePasses)(
+      "should increase in quality by 1 when there are more than 10 days for %s",
+      (passName) => {
+        const item: Item = new Item(passName, 15, 10);
+        const app: GildedTros = new GildedTros([item]);
+
+        app.updateQuality();
+
+        expect(item.sellIn).toBe(14);
+        expect(item.quality).toBe(11);
+      }
+    );
 
     test.each(backstagePasses)(
       "should increase in quality by 2 when there are 10 days or less for %s",
@@ -100,6 +123,19 @@ describe("GildedTros", () => {
 
         expect(item.sellIn).toBe(-1);
         expect(item.quality).toBe(0);
+      }
+    );
+
+    test.each(backstagePasses)(
+      "should never have quality more than 50 for %s",
+      (passName) => {
+        const item: Item = new Item(passName, 5, 49);
+        const app: GildedTros = new GildedTros([item]);
+
+        app.updateQuality();
+
+        expect(item.sellIn).toBe(4);
+        expect(item.quality).toBe(50);
       }
     );
   });
