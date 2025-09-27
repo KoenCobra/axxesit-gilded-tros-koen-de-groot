@@ -57,35 +57,49 @@ describe("GildedTros", () => {
     });
   });
 
-  describe("Backstage passes for Re:Factor", () => {
-    test("should increase in quality by 2 when there are 10 days or less", () => {
-      const item: Item = new Item("Backstage passes for Re:Factor", 10, 10);
-      const app: GildedTros = new GildedTros([item]);
+  describe("Backstage passes", () => {
+    const backstagePasses = [
+      "Backstage passes for Re:Factor",
+      "Backstage passes for HAXX",
+    ];
 
-      app.updateQuality();
+    test.each(backstagePasses)(
+      "should increase in quality by 2 when there are 10 days or less for %s",
+      (passName) => {
+        const item: Item = new Item(passName, 10, 10);
+        const app: GildedTros = new GildedTros([item]);
 
-      expect(item.sellIn).toBe(9);
-      expect(item.quality).toBe(12);
-    });
+        app.updateQuality();
 
-    test("should increase in quality by 3 when there are 5 days or less", () => {
-      const item: Item = new Item("Backstage passes for Re:Factor", 5, 10);
-      const app: GildedTros = new GildedTros([item]);
+        expect(item.sellIn).toBe(9);
+        expect(item.quality).toBe(12);
+      }
+    );
 
-      app.updateQuality();
+    test.each(backstagePasses)(
+      "should increase in quality by 3 when there are 5 days or less for %s",
+      (passName) => {
+        const item: Item = new Item(passName, 5, 10);
+        const app: GildedTros = new GildedTros([item]);
 
-      expect(item.sellIn).toBe(4);
-      expect(item.quality).toBe(13);
-    });
+        app.updateQuality();
 
-    test("should drop to 0 quality after the concert", () => {
-      const item: Item = new Item("Backstage passes for Re:Factor", 0, 10);
-      const app: GildedTros = new GildedTros([item]);
+        expect(item.sellIn).toBe(4);
+        expect(item.quality).toBe(13);
+      }
+    );
 
-      app.updateQuality();
+    test.each(backstagePasses)(
+      "should drop to 0 quality after the concert for %s",
+      (passName) => {
+        const item: Item = new Item(passName, 0, 10);
+        const app: GildedTros = new GildedTros([item]);
 
-      expect(item.sellIn).toBe(-1);
-      expect(item.quality).toBe(0);
-    });
+        app.updateQuality();
+
+        expect(item.sellIn).toBe(-1);
+        expect(item.quality).toBe(0);
+      }
+    );
   });
 });
