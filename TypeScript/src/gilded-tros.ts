@@ -13,12 +13,12 @@ export class GildedTros {
       ) {
         if (item.quality > 0) {
           if (item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
-            item.quality = item.quality - 1;
+            item.quality -= 1;
           }
         }
       } else {
         if (item.quality < 50) {
-          item.quality = item.quality + 1;
+          item.quality += 1;
 
           if (
             item.name == GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR ||
@@ -26,13 +26,13 @@ export class GildedTros {
           ) {
             if (item.sellIn < 11) {
               if (item.quality < 50) {
-                item.quality = item.quality + 1;
+                item.quality += 1;
               }
             }
 
             if (item.sellIn < 6) {
               if (item.quality < 50) {
-                item.quality = item.quality + 1;
+                item.quality += 1;
               }
             }
           }
@@ -40,7 +40,7 @@ export class GildedTros {
       }
 
       if (item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
-        item.sellIn = item.sellIn - 1;
+        item.sellIn -= 1;
       }
 
       if (item.sellIn < 0) {
@@ -51,15 +51,15 @@ export class GildedTros {
           ) {
             if (item.quality > 0) {
               if (item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
-                item.quality = item.quality - 1;
+                item.quality -= 1;
               }
             }
           } else {
-            item.quality = item.quality - item.quality;
+            item.quality = 0;
           }
         } else {
           if (item.quality < 50) {
-            item.quality = item.quality + 1;
+            item.quality += 1;
           }
         }
       }
