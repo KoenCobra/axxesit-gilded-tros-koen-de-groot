@@ -5,67 +5,61 @@ export class GildedTros {
   constructor(public items: Array<Item>) {}
 
   public updateQuality(): void {
-    for (let i = 0; i < this.items.length; i++) {
+    for (const item of this.items) {
       if (
-        this.items[i].name != GILDED_TROS_CONSTANTS.GOOD_WINE &&
-        this.items[i].name !=
-          GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR &&
-        this.items[i].name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX
+        item.name != GILDED_TROS_CONSTANTS.GOOD_WINE &&
+        item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR &&
+        item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX
       ) {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
-            this.items[i].quality = this.items[i].quality - 1;
+        if (item.quality > 0) {
+          if (item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
+            item.quality = item.quality - 1;
           }
         }
       } else {
-        if (this.items[i].quality < 50) {
-          this.items[i].quality = this.items[i].quality + 1;
+        if (item.quality < 50) {
+          item.quality = item.quality + 1;
 
           if (
-            this.items[i].name ==
-              GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR ||
-            this.items[i].name ==
-              GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX
+            item.name == GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR ||
+            item.name == GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX
           ) {
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
+            if (item.sellIn < 11) {
+              if (item.quality < 50) {
+                item.quality = item.quality + 1;
               }
             }
 
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
+            if (item.sellIn < 6) {
+              if (item.quality < 50) {
+                item.quality = item.quality + 1;
               }
             }
           }
         }
       }
 
-      if (this.items[i].name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
+      if (item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
+        item.sellIn = item.sellIn - 1;
       }
 
-      if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != GILDED_TROS_CONSTANTS.GOOD_WINE) {
+      if (item.sellIn < 0) {
+        if (item.name != GILDED_TROS_CONSTANTS.GOOD_WINE) {
           if (
-            this.items[i].name !=
-              GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR &&
-            this.items[i].name !=
-              GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX
+            item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR &&
+            item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX
           ) {
-            if (this.items[i].quality > 0) {
-              if (this.items[i].name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
-                this.items[i].quality = this.items[i].quality - 1;
+            if (item.quality > 0) {
+              if (item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
+                item.quality = item.quality - 1;
               }
             }
           } else {
-            this.items[i].quality =
-              this.items[i].quality - this.items[i].quality;
+            item.quality = item.quality - item.quality;
           }
         } else {
-          if (this.items[i].quality < 50) {
-            this.items[i].quality = this.items[i].quality + 1;
+          if (item.quality < 50) {
+            item.quality = item.quality + 1;
           }
         }
       }
