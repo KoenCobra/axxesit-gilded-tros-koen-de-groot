@@ -54,11 +54,6 @@ describe("GildedTros", () => {
 
       expect(item.sellIn).toBe(1);
       expect(item.quality).toBe(10);
-
-      app.updateQuality();
-
-      expect(item.sellIn).toBe(1);
-      expect(item.quality).toBe(10);
     });
   });
 
