@@ -4,6 +4,16 @@ import { GILDED_TROS_CONSTANTS } from "./../utils/constants";
 
 describe("GildedTros", () => {
   describe("Regular Items", () => {
+    test("should degrade by 1 before the sell by date", () => {
+      const item: Item = new Item(GILDED_TROS_CONSTANTS.REGULAR_ITEM, 5, 10);
+      const app: GildedTros = new GildedTros([item]);
+
+      app.updateQuality();
+
+      expect(item.sellIn).toBe(4);
+      expect(item.quality).toBe(9);
+    });
+
     test("should degrade twice as fast after the sell by date", () => {
       const item: Item = new Item(GILDED_TROS_CONSTANTS.REGULAR_ITEM, 0, 10);
       const app: GildedTros = new GildedTros([item]);
@@ -52,6 +62,16 @@ describe("GildedTros", () => {
       app.updateQuality();
 
       expect(item.sellIn).toBe(0);
+      expect(item.quality).toBe(50);
+    });
+
+    test("should never have quality more than 50 even after sell date", () => {
+      const item: Item = new Item(GILDED_TROS_CONSTANTS.GOOD_WINE, 0, 49);
+      const app: GildedTros = new GildedTros([item]);
+
+      app.updateQuality();
+
+      expect(item.sellIn).toBe(-1);
       expect(item.quality).toBe(50);
     });
   });
