@@ -24,7 +24,7 @@ export class GildedTros {
 
   private updateBDAWGKeychain(item: Item): void {}
 
-  private updateBackstagePassesForReFactor(item: Item): void {
+  private updateBackstagePasses(item: Item): void {
     if (item.quality < 50) {
       item.quality += 1;
 
@@ -44,64 +44,6 @@ export class GildedTros {
     }
   }
 
-  private updateBackstagePassesForHaxx(item: Item): void {
-    if (
-      item.name != GILDED_TROS_CONSTANTS.GOOD_WINE &&
-      item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR &&
-      item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX
-    ) {
-      if (
-        item.quality > 0 &&
-        item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN
-      ) {
-        item.quality -= 1;
-      }
-    } else {
-      if (item.quality < 50) {
-        item.quality += 1;
-
-        if (
-          item.name == GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR ||
-          item.name == GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX
-        ) {
-          if (item.sellIn < 11 && item.quality < 50) {
-            item.quality += 1;
-          }
-
-          if (item.sellIn < 6 && item.quality < 50) {
-            item.quality += 1;
-          }
-        }
-      }
-    }
-
-    if (item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
-      item.sellIn -= 1;
-    }
-
-    if (item.sellIn < 0) {
-      if (item.name != GILDED_TROS_CONSTANTS.GOOD_WINE) {
-        if (
-          item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR &&
-          item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX
-        ) {
-          if (
-            item.quality > 0 &&
-            item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN
-          ) {
-            item.quality -= 1;
-          }
-        } else {
-          item.quality = 0;
-        }
-      } else {
-        if (item.quality < 50) {
-          item.quality += 1;
-        }
-      }
-    }
-  }
-
   public updateQuality(): void {
     for (const item of this.items) {
       switch (item.name) {
@@ -118,11 +60,11 @@ export class GildedTros {
           continue;
 
         case GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR:
-          this.updateBackstagePassesForReFactor(item);
+          this.updateBackstagePasses(item);
           continue;
 
         case GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX:
-          this.updateBackstagePassesForHaxx(item);
+          this.updateBackstagePasses(item);
           continue;
       }
     }
