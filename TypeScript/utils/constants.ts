@@ -7,4 +7,5 @@ export const GILDED_TROS_CONSTANTS = {
   DUPLICATE_CODE: "Duplicate Code",
   LONG_METHODS: "Long Methods",
   UGLY_VARIABLE_NAMES: "Ugly Variable Names",
+  MAX_QUALITY: 50,
 };
