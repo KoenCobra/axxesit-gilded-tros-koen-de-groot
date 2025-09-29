@@ -9,3 +9,11 @@ export const isSellByDatePassed = (item: Item): boolean => item.sellIn < 0;
 export const decreaseSellInByOne = (item: Item): void => {
   item.sellIn -= 1;
 };
+
+export const increaseQuality = (item: Item, value: number): void => {
+  item.quality += value;
+};
+
+export const decreaseQuality = (item: Item, value: number): void => {
+  item.quality -= value;
+};
