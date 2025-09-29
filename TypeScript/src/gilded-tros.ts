@@ -55,10 +55,6 @@ export class GildedTros {
   public updateQuality(): void {
     for (const item of this.items) {
       switch (item.name) {
-        case GILDED_TROS_CONSTANTS.NORMAL_ITEM:
-          this.updateNormalItem(item);
-          continue;
-
         case GILDED_TROS_CONSTANTS.GOOD_WINE:
           this.updateGoodWine(item);
           continue;
@@ -68,9 +64,6 @@ export class GildedTros {
           continue;
 
         case GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR:
-          this.updateBackstagePasses(item);
-          continue;
-
         case GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX:
           this.updateBackstagePasses(item);
           continue;
@@ -79,6 +72,10 @@ export class GildedTros {
         case GILDED_TROS_CONSTANTS.LONG_METHODS:
         case GILDED_TROS_CONSTANTS.UGLY_VARIABLE_NAMES:
           this.updateSmellyItem(item);
+          continue;
+
+        default:
+          this.updateNormalItem(item);
           continue;
       }
     }
