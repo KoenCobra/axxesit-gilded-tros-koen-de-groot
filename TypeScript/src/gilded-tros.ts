@@ -23,17 +23,6 @@ export class GildedTros {
   }
 
   private updateBDAWGKeychain(item: Item): void {
-    if (
-      item.quality > 0 &&
-      item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN
-    ) {
-      item.quality -= 1;
-    }
-
-    if (item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
-      item.sellIn -= 1;
-    }
-
     if (item.sellIn < 0) {
       if (item.name != GILDED_TROS_CONSTANTS.GOOD_WINE) {
         if (
