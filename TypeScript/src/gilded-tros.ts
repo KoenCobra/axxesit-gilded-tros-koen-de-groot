@@ -22,7 +22,10 @@ export class GildedTros {
     }
   }
 
-  private updateBDAWGKeychain(item: Item): void {}
+  private updateBDAWGKeychain(item: Item): void {
+    item.quality = item.quality;
+    item.sellIn = item.sellIn;
+  }
 
   private updateBackstagePasses(item: Item): void {
     if (item.quality < 50) {
