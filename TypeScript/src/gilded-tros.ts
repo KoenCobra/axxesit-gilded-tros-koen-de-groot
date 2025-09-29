@@ -4,6 +4,12 @@ import { Item } from "./item";
 export class GildedTros {
   constructor(public items: Array<Item>) {}
 
+  private updateRegularItem(item: Item): void {}
+  private updateGoodWine(item: Item): void {}
+  private updateBDAWGKeychain(item: Item): void {}
+  private updateBackstagePassesForReFactor(item: Item): void {}
+  private updateBackstagePassesForHaxx(item: Item): void {}
+
   public updateQuality(): void {
     for (const item of this.items) {
       if (
