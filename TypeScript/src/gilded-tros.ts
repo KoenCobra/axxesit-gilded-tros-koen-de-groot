@@ -25,17 +25,10 @@ export class GildedTros {
   private updateBDAWGKeychain(item: Item): void {
     if (item.sellIn < 0) {
       if (
-        item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR &&
-        item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX
+        item.quality > 0 &&
+        item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN
       ) {
-        if (
-          item.quality > 0 &&
-          item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN
-        ) {
-          item.quality -= 1;
-        }
-      } else {
-        item.quality = 0;
+        item.quality -= 1;
       }
     }
   }
