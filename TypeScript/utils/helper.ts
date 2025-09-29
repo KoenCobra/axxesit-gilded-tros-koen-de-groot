@@ -5,3 +5,7 @@ export const canIncreaseQuality = (item: Item): boolean =>
   item.quality < GILDED_TROS_CONSTANTS.MAX_QUALITY;
 
 export const isSellByDatePassed = (item: Item): boolean => item.sellIn < 0;
+
+export const decreaseSellInByOne = (item: Item): void => {
+  item.sellIn -= 1;
+};
