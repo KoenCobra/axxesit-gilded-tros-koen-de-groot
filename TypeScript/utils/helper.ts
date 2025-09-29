@@ -4,6 +4,8 @@ import { GILDED_TROS_CONSTANTS } from "./constants";
 export const canIncreaseQuality = (item: Item): boolean =>
   item.quality < GILDED_TROS_CONSTANTS.MAX_QUALITY;
 
+export const canDecreaseQuality = (item: Item): boolean => item.quality > 0;
+
 export const isSellByDatePassed = (item: Item): boolean => item.sellIn < 0;
 
 export const decreaseSellIn = (item: Item, value: number): void => {
@@ -11,9 +13,14 @@ export const decreaseSellIn = (item: Item, value: number): void => {
 };
 
 export const increaseQuality = (item: Item, value: number): void => {
-  item.quality += value;
+  const increaseAmount = Math.min(
+    value,
+    GILDED_TROS_CONSTANTS.MAX_QUALITY - item.quality
+  );
+  item.quality += increaseAmount;
 };
 
 export const decreaseQuality = (item: Item, value: number): void => {
-  item.quality -= value;
+  const decreaseAmount = Math.min(value, item.quality);
+  item.quality -= decreaseAmount;
 };

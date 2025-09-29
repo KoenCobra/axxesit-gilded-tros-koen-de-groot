@@ -1,5 +1,6 @@
 import { GILDED_TROS_CONSTANTS } from "../utils/constants";
 import {
+  canDecreaseQuality,
   canIncreaseQuality,
   decreaseQuality,
   decreaseSellIn,
@@ -12,11 +13,12 @@ export class GildedTros {
   constructor(public items: Array<Item>) {}
 
   private updateNormalItem(item: Item): void {
-    if (item.quality > 0) decreaseQuality(item, 1);
+    if (canDecreaseQuality(item)) decreaseQuality(item, 1);
 
     decreaseSellIn(item, 1);
 
-    if (isSellByDatePassed(item) && item.quality > 0) decreaseQuality(item, 1);
+    if (isSellByDatePassed(item) && canDecreaseQuality(item))
+      decreaseQuality(item, 1);
   }
 
   private updateGoodWine(item: Item): void {
@@ -55,11 +57,13 @@ export class GildedTros {
   }
 
   private updateSmellyItem(item: Item): void {
-    if (item.quality > 2) decreaseQuality(item, 2);
+    if (canDecreaseQuality(item)) decreaseQuality(item, 2);
 
     decreaseSellIn(item, 1);
 
-    if (isSellByDatePassed(item) && item.quality > 2) decreaseQuality(item, 2);
+    if (isSellByDatePassed(item) && canDecreaseQuality(item)) {
+      decreaseQuality(item, 2);
+    }
   }
 
   public updateQuality(): void {
