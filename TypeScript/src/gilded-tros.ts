@@ -44,6 +44,14 @@ export class GildedTros {
     }
   }
 
+  private updateSmellyItem(item: Item): void {
+    if (item.quality > 1) item.quality -= 2;
+
+    item.sellIn -= 1;
+
+    if (item.sellIn < 0) item.quality -= 2;
+  }
+
   public updateQuality(): void {
     for (const item of this.items) {
       switch (item.name) {
@@ -65,6 +73,12 @@ export class GildedTros {
 
         case GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX:
           this.updateBackstagePasses(item);
+          continue;
+
+        case GILDED_TROS_CONSTANTS.DUPLICATE_CODE:
+        case GILDED_TROS_CONSTANTS.LONG_METHODS:
+        case GILDED_TROS_CONSTANTS.UGLY_VARIABLE_NAMES:
+          this.updateSmellyItem(item);
           continue;
       }
     }

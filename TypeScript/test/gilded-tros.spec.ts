@@ -193,5 +193,18 @@ describe("GildedTros", () => {
         expect(item.quality).toBe(0);
       }
     );
+
+    test.each(smellyItems)(
+      "should degrade twice as fast after the sell by date for %s",
+      (itemName) => {
+        const item: Item = new Item(itemName, 0, 10);
+        const app: GildedTros = new GildedTros([item]);
+
+        app.updateQuality();
+
+        expect(item.sellIn).toBe(-1);
+        expect(item.quality).toBe(6);
+      }
+    );
   });
 });
