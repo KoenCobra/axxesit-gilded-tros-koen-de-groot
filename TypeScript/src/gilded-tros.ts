@@ -5,17 +5,8 @@ export class GildedTros {
   constructor(public items: Array<Item>) {}
 
   private updateRegularItem(item: Item): void {
-    if (
-      item.name != GILDED_TROS_CONSTANTS.GOOD_WINE &&
-      item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_RE_FACTOR &&
-      item.name != GILDED_TROS_CONSTANTS.BACKSTAGE_PASSES_FOR_HAXX
-    ) {
-      if (
-        item.quality > 0 &&
-        item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN
-      ) {
-        item.quality -= 1;
-      }
+    if (item.quality > 0) {
+      item.quality -= 1;
     }
 
     if (item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN) {
