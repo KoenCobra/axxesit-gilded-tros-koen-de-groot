@@ -30,6 +30,7 @@ describe("GildedTros", () => {
 
       app.updateQuality();
 
+      expect(item.sellIn).toBe(0);
       expect(item.quality).toBe(0);
     });
   });
