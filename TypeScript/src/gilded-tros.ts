@@ -9,7 +9,7 @@ export class GildedTros {
 
     item.sellIn -= 1;
 
-    if (item.sellIn < 0) item.quality -= 1;
+    if (item.sellIn < 0 && item.quality > 0) item.quality -= 1;
   }
 
   private updateGoodWine(item: Item): void {
@@ -48,11 +48,11 @@ export class GildedTros {
   }
 
   private updateSmellyItem(item: Item): void {
-    if (item.quality > 1) item.quality -= 2;
+    if (item.quality > 0) item.quality -= 2;
 
     item.sellIn -= 1;
 
-    if (item.sellIn < 0) item.quality -= 2;
+    if (item.sellIn < 0 && item.quality > 0) item.quality -= 2;
   }
 
   public updateQuality(): void {
