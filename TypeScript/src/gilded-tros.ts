@@ -22,16 +22,7 @@ export class GildedTros {
     }
   }
 
-  private updateBDAWGKeychain(item: Item): void {
-    if (item.sellIn < 0) {
-      if (
-        item.quality > 0 &&
-        item.name != GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN
-      ) {
-        item.quality -= 1;
-      }
-    }
-  }
+  private updateBDAWGKeychain(item: Item): void {}
 
   private updateBackstagePassesForReFactor(item: Item): void {
     if (
