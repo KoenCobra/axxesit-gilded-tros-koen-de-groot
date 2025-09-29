@@ -160,4 +160,38 @@ describe("GildedTros", () => {
       }
     );
   });
+
+  describe("Smelly Items", () => {
+    const smellyItems = [
+      GILDED_TROS_CONSTANTS.DUPLICATE_CODE,
+      GILDED_TROS_CONSTANTS.LONG_METHODS,
+      GILDED_TROS_CONSTANTS.UGLY_VARIABLE_NAMES,
+    ];
+
+    test.each(smellyItems)(
+      "should degrade in quality twice as fast as normal items for %s",
+      (itemName) => {
+        const item: Item = new Item(itemName, 5, 10);
+        const app: GildedTros = new GildedTros([item]);
+
+        app.updateQuality();
+
+        expect(item.sellIn).toBe(4);
+        expect(item.quality).toBe(8);
+      }
+    );
+
+    test.each(smellyItems)(
+      "should never have negative quality for %s",
+      (itemName) => {
+        const item: Item = new Item(itemName, 1, 0);
+        const app: GildedTros = new GildedTros([item]);
+
+        app.updateQuality();
+
+        expect(item.sellIn).toBe(0);
+        expect(item.quality).toBe(0);
+      }
+    );
+  });
 });
