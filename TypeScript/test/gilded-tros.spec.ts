@@ -135,7 +135,7 @@ describe("GildedTros", () => {
     );
 
     test.each(backstagePasses)(
-      "should drop to 0 quality after the concert for %s",
+      "should drop to 0 quality after the conference for %s",
       (passName) => {
         const item: Item = new Item(passName, 0, 10);
         const app: GildedTros = new GildedTros([item]);
