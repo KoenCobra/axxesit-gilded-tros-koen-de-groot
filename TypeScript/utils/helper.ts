@@ -6,8 +6,8 @@ export const canIncreaseQuality = (item: Item): boolean =>
 
 export const isSellByDatePassed = (item: Item): boolean => item.sellIn < 0;
 
-export const decreaseSellInByOne = (item: Item): void => {
-  item.sellIn -= 1;
+export const decreaseSellIn = (item: Item, value: number): void => {
+  item.sellIn -= value;
 };
 
 export const increaseQuality = (item: Item, value: number): void => {

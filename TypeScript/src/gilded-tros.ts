@@ -2,7 +2,7 @@ import { GILDED_TROS_CONSTANTS } from "../utils/constants";
 import {
   canIncreaseQuality,
   decreaseQuality,
-  decreaseSellInByOne,
+  decreaseSellIn,
   increaseQuality,
   isSellByDatePassed,
 } from "./../utils/helper";
@@ -14,7 +14,7 @@ export class GildedTros {
   private updateNormalItem(item: Item): void {
     if (item.quality > 0) decreaseQuality(item, 1);
 
-    decreaseSellInByOne(item);
+    decreaseSellIn(item, 1);
 
     if (isSellByDatePassed(item) && item.quality > 0) decreaseQuality(item, 1);
   }
@@ -22,7 +22,7 @@ export class GildedTros {
   private updateGoodWine(item: Item): void {
     if (canIncreaseQuality(item)) increaseQuality(item, 1);
 
-    decreaseSellInByOne(item);
+    decreaseSellIn(item, 1);
 
     if (isSellByDatePassed(item) && canIncreaseQuality(item)) {
       increaseQuality(item, 1);
@@ -47,7 +47,7 @@ export class GildedTros {
       }
     }
 
-    decreaseSellInByOne(item);
+    decreaseSellIn(item, 1);
 
     if (isSellByDatePassed(item)) {
       item.quality = 0;
@@ -57,7 +57,7 @@ export class GildedTros {
   private updateSmellyItem(item: Item): void {
     if (item.quality > 2) decreaseQuality(item, 2);
 
-    decreaseSellInByOne(item);
+    decreaseSellIn(item, 1);
 
     if (isSellByDatePassed(item) && item.quality > 2) decreaseQuality(item, 2);
   }
