@@ -1,10 +1,10 @@
 import { GILDED_TROS_CONSTANTS } from "../utils/constants";
 import {
-  canDecreaseQuality,
-  canIncreaseQuality,
   decreaseQuality,
   decreaseSellIn,
   increaseQuality,
+  isItemQualityGreaterThanZero,
+  isItemQualitySmallerThanMaxQuality,
   isSellByDatePassed,
 } from "./../utils/helper";
 import { Item } from "./item";
@@ -13,20 +13,20 @@ export class GildedTros {
   constructor(public items: Array<Item>) {}
 
   private updateNormalItem(item: Item): void {
-    if (canDecreaseQuality(item)) decreaseQuality(item, 1);
+    if (isItemQualityGreaterThanZero(item)) decreaseQuality(item, 1);
 
     decreaseSellIn(item, 1);
 
-    if (isSellByDatePassed(item) && canDecreaseQuality(item))
+    if (isSellByDatePassed(item) && isItemQualityGreaterThanZero(item))
       decreaseQuality(item, 1);
   }
 
   private updateGoodWine(item: Item): void {
-    if (canIncreaseQuality(item)) increaseQuality(item, 1);
+    if (isItemQualitySmallerThanMaxQuality(item)) increaseQuality(item, 1);
 
     decreaseSellIn(item, 1);
 
-    if (isSellByDatePassed(item) && canIncreaseQuality(item)) {
+    if (isSellByDatePassed(item) && isItemQualitySmallerThanMaxQuality(item)) {
       increaseQuality(item, 1);
     }
   }
@@ -37,14 +37,14 @@ export class GildedTros {
   }
 
   private updateBackstagePasses(item: Item): void {
-    if (canIncreaseQuality(item)) {
+    if (isItemQualitySmallerThanMaxQuality(item)) {
       increaseQuality(item, 1);
 
-      if (item.sellIn < 11 && canIncreaseQuality(item)) {
+      if (item.sellIn < 11 && isItemQualitySmallerThanMaxQuality(item)) {
         increaseQuality(item, 1);
       }
 
-      if (item.sellIn < 6 && canIncreaseQuality(item)) {
+      if (item.sellIn < 6 && isItemQualitySmallerThanMaxQuality(item)) {
         increaseQuality(item, 1);
       }
     }
@@ -57,11 +57,11 @@ export class GildedTros {
   }
 
   private updateSmellyItem(item: Item): void {
-    if (canDecreaseQuality(item)) decreaseQuality(item, 2);
+    if (isItemQualityGreaterThanZero(item)) decreaseQuality(item, 2);
 
     decreaseSellIn(item, 1);
 
-    if (isSellByDatePassed(item) && canDecreaseQuality(item)) {
+    if (isSellByDatePassed(item) && isItemQualityGreaterThanZero(item)) {
       decreaseQuality(item, 2);
     }
   }

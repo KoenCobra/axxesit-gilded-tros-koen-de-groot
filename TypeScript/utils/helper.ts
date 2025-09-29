@@ -1,10 +1,11 @@
 import { Item } from "../src/item";
 import { GILDED_TROS_CONSTANTS } from "./constants";
 
-export const canIncreaseQuality = (item: Item): boolean =>
+export const isItemQualitySmallerThanMaxQuality = (item: Item): boolean =>
   item.quality < GILDED_TROS_CONSTANTS.MAX_QUALITY;
 
-export const canDecreaseQuality = (item: Item): boolean => item.quality > 0;
+export const isItemQualityGreaterThanZero = (item: Item): boolean =>
+  item.quality > 0;
 
 export const isSellByDatePassed = (item: Item): boolean => item.sellIn < 0;
 
