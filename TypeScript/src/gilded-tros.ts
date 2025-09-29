@@ -4,7 +4,7 @@ import { Item } from "./item";
 export class GildedTros {
   constructor(public items: Array<Item>) {}
 
-  private updateRegularItem(item: Item): void {
+  private updateNormalItem(item: Item): void {
     if (item.quality > 0) item.quality -= 1;
 
     item.sellIn -= 1;
@@ -47,8 +47,8 @@ export class GildedTros {
   public updateQuality(): void {
     for (const item of this.items) {
       switch (item.name) {
-        case GILDED_TROS_CONSTANTS.REGULAR_ITEM:
-          this.updateRegularItem(item);
+        case GILDED_TROS_CONSTANTS.NORMAL_ITEM:
+          this.updateNormalItem(item);
           continue;
 
         case GILDED_TROS_CONSTANTS.GOOD_WINE:

@@ -3,9 +3,9 @@ import { Item } from "../src/item";
 import { GILDED_TROS_CONSTANTS } from "./../utils/constants";
 
 describe("GildedTros", () => {
-  describe("Regular Items", () => {
+  describe("Normal Items", () => {
     test("should degrade by 1 before the sell by date", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.REGULAR_ITEM, 5, 10);
+      const item: Item = new Item(GILDED_TROS_CONSTANTS.NORMAL_ITEM, 5, 10);
       const app: GildedTros = new GildedTros([item]);
 
       app.updateQuality();
@@ -15,7 +15,7 @@ describe("GildedTros", () => {
     });
 
     test("should degrade twice as fast after the sell by date", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.REGULAR_ITEM, 0, 10);
+      const item: Item = new Item(GILDED_TROS_CONSTANTS.NORMAL_ITEM, 0, 10);
       const app: GildedTros = new GildedTros([item]);
 
       app.updateQuality();
@@ -25,7 +25,7 @@ describe("GildedTros", () => {
     });
 
     test("should never have negative quality", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.REGULAR_ITEM, 1, 0);
+      const item: Item = new Item(GILDED_TROS_CONSTANTS.NORMAL_ITEM, 1, 0);
       const app: GildedTros = new GildedTros([item]);
 
       app.updateQuality();
