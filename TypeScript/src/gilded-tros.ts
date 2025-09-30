@@ -3,8 +3,6 @@ import {
   decreaseQuality,
   decreaseSellIn,
   increaseQuality,
-  isItemQualityGreaterThanZero,
-  isItemQualitySmallerThanMaxQuality,
   isSellByDatePassed,
 } from "./../utils/helper";
 import { Item } from "./item";
@@ -13,22 +11,19 @@ export class GildedTros {
   constructor(public items: Array<Item>) {}
 
   private updateNormalItem(item: Item): void {
-    if (isItemQualityGreaterThanZero(item)) decreaseQuality(item, 1);
+    decreaseQuality(item, 1);
 
     decreaseSellIn(item, 1);
 
-    if (isSellByDatePassed(item) && isItemQualityGreaterThanZero(item))
-      decreaseQuality(item, 1);
+    if (isSellByDatePassed(item)) decreaseQuality(item, 1);
   }
 
   private updateGoodWine(item: Item): void {
-    if (isItemQualitySmallerThanMaxQuality(item)) increaseQuality(item, 1);
+    increaseQuality(item, 1);
 
     decreaseSellIn(item, 1);
 
-    if (isSellByDatePassed(item) && isItemQualitySmallerThanMaxQuality(item)) {
-      increaseQuality(item, 1);
-    }
+    if (isSellByDatePassed(item)) increaseQuality(item, 1);
   }
 
   private updateBDAWGKeychain(item: Item): void {
@@ -37,16 +32,14 @@ export class GildedTros {
   }
 
   private updateBackstagePasses(item: Item): void {
-    if (isItemQualitySmallerThanMaxQuality(item)) {
+    increaseQuality(item, 1);
+
+    if (item.sellIn < 11) {
       increaseQuality(item, 1);
+    }
 
-      if (item.sellIn < 11 && isItemQualitySmallerThanMaxQuality(item)) {
-        increaseQuality(item, 1);
-      }
-
-      if (item.sellIn < 6 && isItemQualitySmallerThanMaxQuality(item)) {
-        increaseQuality(item, 1);
-      }
+    if (item.sellIn < 6) {
+      increaseQuality(item, 1);
     }
 
     decreaseSellIn(item, 1);
@@ -57,13 +50,11 @@ export class GildedTros {
   }
 
   private updateSmellyItem(item: Item): void {
-    if (isItemQualityGreaterThanZero(item)) decreaseQuality(item, 2);
+    decreaseQuality(item, 2);
 
     decreaseSellIn(item, 1);
 
-    if (isSellByDatePassed(item) && isItemQualityGreaterThanZero(item)) {
-      decreaseQuality(item, 2);
-    }
+    if (isSellByDatePassed(item)) decreaseQuality(item, 2);
   }
 
   public updateQuality(): void {
