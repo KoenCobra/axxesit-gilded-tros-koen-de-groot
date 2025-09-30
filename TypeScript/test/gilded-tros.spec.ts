@@ -206,5 +206,31 @@ describe("GildedTros", () => {
         expect(item.quality).toBe(6);
       }
     );
+
+    test.each(smellyItems)(
+      "should not go below 0 when quality is low and sell date has passed for %s",
+      (itemName) => {
+        const item: Item = new Item(itemName, 0, 3);
+        const app: GildedTros = new GildedTros([item]);
+
+        app.updateQuality();
+
+        expect(item.sellIn).toBe(-1);
+        expect(item.quality).toBe(0);
+      }
+    );
+
+    test.each(smellyItems)(
+      "should handle quality of 1 after sell date for %s",
+      (itemName) => {
+        const item: Item = new Item(itemName, -1, 1);
+        const app: GildedTros = new GildedTros([item]);
+
+        app.updateQuality();
+
+        expect(item.sellIn).toBe(-2);
+        expect(item.quality).toBe(0);
+      }
+    );
   });
 });
