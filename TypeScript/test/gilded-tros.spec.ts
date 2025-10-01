@@ -1,34 +1,24 @@
-import { GildedTros } from "../src/gilded-tros";
-import { Item } from "../src/item";
+import { updateItem } from "../utils/helper";
 import { GILDED_TROS_CONSTANTS } from "./../utils/constants";
 
 describe("GildedTros", () => {
   describe("Normal Items", () => {
-    test("should degrade by 1 before the sell by date", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.NORMAL_ITEM, 5, 10);
-      const app: GildedTros = new GildedTros([item]);
-
-      app.updateQuality();
+    test("should decrease quality by 1 and sellIn by 1 before sell date", () => {
+      const item = updateItem(GILDED_TROS_CONSTANTS.NORMAL_ITEM, 5, 10);
 
       expect(item.sellIn).toBe(4);
       expect(item.quality).toBe(9);
     });
 
-    test("should degrade twice as fast after the sell by date", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.NORMAL_ITEM, 0, 10);
-      const app: GildedTros = new GildedTros([item]);
-
-      app.updateQuality();
+    test("should decrease quality by 2 after sell date passes", () => {
+      const item = updateItem(GILDED_TROS_CONSTANTS.NORMAL_ITEM, 0, 10);
 
       expect(item.sellIn).toBe(-1);
       expect(item.quality).toBe(8);
     });
 
-    test("should never have negative quality", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.NORMAL_ITEM, 1, 0);
-      const app: GildedTros = new GildedTros([item]);
-
-      app.updateQuality();
+    test("should never decrease quality below 0", () => {
+      const item = updateItem(GILDED_TROS_CONSTANTS.NORMAL_ITEM, 1, 0);
 
       expect(item.sellIn).toBe(0);
       expect(item.quality).toBe(0);
@@ -36,41 +26,29 @@ describe("GildedTros", () => {
   });
 
   describe("Good Wine", () => {
-    test("should increase in quality the older it gets", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.GOOD_WINE, 1, 10);
-      const app: GildedTros = new GildedTros([item]);
-
-      app.updateQuality();
+    test("should increase quality by 1 before sell date", () => {
+      const item = updateItem(GILDED_TROS_CONSTANTS.GOOD_WINE, 1, 10);
 
       expect(item.sellIn).toBe(0);
       expect(item.quality).toBe(11);
     });
 
-    test("should increase in quality by 2 after the sell date", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.GOOD_WINE, 0, 10);
-      const app: GildedTros = new GildedTros([item]);
-
-      app.updateQuality();
+    test("should increase quality by 2 after sell date passes", () => {
+      const item = updateItem(GILDED_TROS_CONSTANTS.GOOD_WINE, 0, 10);
 
       expect(item.sellIn).toBe(-1);
       expect(item.quality).toBe(12);
     });
 
-    test("should never have quality more than 50", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.GOOD_WINE, 1, 50);
-      const app: GildedTros = new GildedTros([item]);
-
-      app.updateQuality();
+    test("should never increase quality above 50", () => {
+      const item = updateItem(GILDED_TROS_CONSTANTS.GOOD_WINE, 1, 50);
 
       expect(item.sellIn).toBe(0);
       expect(item.quality).toBe(50);
     });
 
-    test("should never have quality more than 50 even after sell date", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.GOOD_WINE, 0, 49);
-      const app: GildedTros = new GildedTros([item]);
-
-      app.updateQuality();
+    test("should cap at 50 quality even when increasing by 2 after sell date", () => {
+      const item = updateItem(GILDED_TROS_CONSTANTS.GOOD_WINE, 0, 49);
 
       expect(item.sellIn).toBe(-1);
       expect(item.quality).toBe(50);
@@ -78,11 +56,8 @@ describe("GildedTros", () => {
   });
 
   describe("B-DAWG Keychain", () => {
-    test("should never have to be sold or decreases in Quality", () => {
-      const item: Item = new Item(GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN, 1, 80);
-      const app: GildedTros = new GildedTros([item]);
-
-      app.updateQuality();
+    test("should never change sellIn or quality (legendary item)", () => {
+      const item = updateItem(GILDED_TROS_CONSTANTS.B_DAWG_KEYCHAIN, 1, 80);
 
       expect(item.sellIn).toBe(1);
       expect(item.quality).toBe(80);
@@ -96,12 +71,9 @@ describe("GildedTros", () => {
     ];
 
     test.each(backstagePasses)(
-      "should increase in quality by 1 when there are more than 10 days for %s",
+      "should increase quality by 1 when more than 10 days remain - %s",
       (passName) => {
-        const item: Item = new Item(passName, 15, 10);
-        const app: GildedTros = new GildedTros([item]);
-
-        app.updateQuality();
+        const item = updateItem(passName, 15, 10);
 
         expect(item.sellIn).toBe(14);
         expect(item.quality).toBe(11);
@@ -109,12 +81,9 @@ describe("GildedTros", () => {
     );
 
     test.each(backstagePasses)(
-      "should increase in quality by 2 when there are 10 days or less for %s",
+      "should increase quality by 2 when 10 days or less remain - %s",
       (passName) => {
-        const item: Item = new Item(passName, 10, 10);
-        const app: GildedTros = new GildedTros([item]);
-
-        app.updateQuality();
+        const item = updateItem(passName, 10, 10);
 
         expect(item.sellIn).toBe(9);
         expect(item.quality).toBe(12);
@@ -122,12 +91,9 @@ describe("GildedTros", () => {
     );
 
     test.each(backstagePasses)(
-      "should increase in quality by 3 when there are 5 days or less for %s",
+      "should increase quality by 3 when 5 days or less remain - %s",
       (passName) => {
-        const item: Item = new Item(passName, 5, 10);
-        const app: GildedTros = new GildedTros([item]);
-
-        app.updateQuality();
+        const item = updateItem(passName, 5, 10);
 
         expect(item.sellIn).toBe(4);
         expect(item.quality).toBe(13);
@@ -135,12 +101,9 @@ describe("GildedTros", () => {
     );
 
     test.each(backstagePasses)(
-      "should drop to 0 quality after the conference for %s",
+      "should drop to 0 quality after conference (sellIn passes) - %s",
       (passName) => {
-        const item: Item = new Item(passName, 0, 10);
-        const app: GildedTros = new GildedTros([item]);
-
-        app.updateQuality();
+        const item = updateItem(passName, 0, 10);
 
         expect(item.sellIn).toBe(-1);
         expect(item.quality).toBe(0);
@@ -148,12 +111,9 @@ describe("GildedTros", () => {
     );
 
     test.each(backstagePasses)(
-      "should never have quality more than 50 for %s",
+      "should cap at 50 quality maximum - %s",
       (passName) => {
-        const item: Item = new Item(passName, 5, 49);
-        const app: GildedTros = new GildedTros([item]);
-
-        app.updateQuality();
+        const item = updateItem(passName, 5, 49);
 
         expect(item.sellIn).toBe(4);
         expect(item.quality).toBe(50);
@@ -169,12 +129,9 @@ describe("GildedTros", () => {
     ];
 
     test.each(smellyItems)(
-      "should degrade in quality twice as fast as normal items for %s",
+      "should decrease quality by 2 before sell date (twice as fast) - %s",
       (itemName) => {
-        const item: Item = new Item(itemName, 5, 10);
-        const app: GildedTros = new GildedTros([item]);
-
-        app.updateQuality();
+        const item = updateItem(itemName, 5, 10);
 
         expect(item.sellIn).toBe(4);
         expect(item.quality).toBe(8);
@@ -182,12 +139,9 @@ describe("GildedTros", () => {
     );
 
     test.each(smellyItems)(
-      "should never have negative quality for %s",
+      "should never decrease quality below 0 - %s",
       (itemName) => {
-        const item: Item = new Item(itemName, 1, 0);
-        const app: GildedTros = new GildedTros([item]);
-
-        app.updateQuality();
+        const item = updateItem(itemName, 1, 0);
 
         expect(item.sellIn).toBe(0);
         expect(item.quality).toBe(0);
@@ -195,12 +149,9 @@ describe("GildedTros", () => {
     );
 
     test.each(smellyItems)(
-      "should degrade twice as fast after the sell by date for %s",
+      "should decrease quality by 4 after sell date passes - %s",
       (itemName) => {
-        const item: Item = new Item(itemName, 0, 10);
-        const app: GildedTros = new GildedTros([item]);
-
-        app.updateQuality();
+        const item = updateItem(itemName, 0, 10);
 
         expect(item.sellIn).toBe(-1);
         expect(item.quality).toBe(6);
@@ -208,12 +159,9 @@ describe("GildedTros", () => {
     );
 
     test.each(smellyItems)(
-      "should not go below 0 when quality is low and sell date has passed for %s",
+      "should cap at 0 when quality is low after sell date - %s",
       (itemName) => {
-        const item: Item = new Item(itemName, 0, 3);
-        const app: GildedTros = new GildedTros([item]);
-
-        app.updateQuality();
+        const item = updateItem(itemName, 0, 3);
 
         expect(item.sellIn).toBe(-1);
         expect(item.quality).toBe(0);
@@ -221,12 +169,9 @@ describe("GildedTros", () => {
     );
 
     test.each(smellyItems)(
-      "should handle quality of 1 after sell date for %s",
+      "should handle edge case of quality 1 after sell date - %s",
       (itemName) => {
-        const item: Item = new Item(itemName, -1, 1);
-        const app: GildedTros = new GildedTros([item]);
-
-        app.updateQuality();
+        const item = updateItem(itemName, -1, 1);
 
         expect(item.sellIn).toBe(-2);
         expect(item.quality).toBe(0);

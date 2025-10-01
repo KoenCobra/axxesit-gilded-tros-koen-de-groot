@@ -1,3 +1,4 @@
+import { GildedTros } from "../src/gilded-tros";
 import { Item } from "../src/item";
 import { GILDED_TROS_CONSTANTS } from "./constants";
 
@@ -20,4 +21,15 @@ export const increaseQuality = (item: Item, value: number): void => {
 export const decreaseQuality = (item: Item, value: number): void => {
   const decreaseAmount = Math.min(value, item.quality);
   item.quality -= decreaseAmount;
+};
+
+export const updateItem = (
+  name: string,
+  sellIn: number,
+  quality: number
+): Item => {
+  const item = new Item(name, sellIn, quality);
+  const gildedTros = new GildedTros([item]);
+  gildedTros.updateQuality();
+  return item;
 };
